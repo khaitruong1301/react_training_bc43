@@ -6,8 +6,6 @@ export default class DemoLogin extends Component {
     state = {   
         result: 'default value'
     }
-
-    
     handleSubmit = (event) => {
         event.preventDefault();
         // this.state.result = 'Đăng nhập thành công !'; //Không được thay đổi state trực tiếp vì giao diện sẽ không render lại.
@@ -19,6 +17,9 @@ export default class DemoLogin extends Component {
         */
         this.setState(newState);
     }
+
+    
+
     render() {
         return (
             <div className='container'>
