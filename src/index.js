@@ -14,21 +14,33 @@ import './assets/scss/index.scss';
 import DemoProps from './Props/DemoProps';
 import ProductList from './Props/ProductList/ProductList';
 import ProductDetail from './Props/ProductDetail/ProductDetail';
-
+//Cấu hình react router dom
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import HomeTemplate from './Templates/HomeTemplate';
+import Cart from './Props/ProductDetail/Cart';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <div>
-    {/* <Home /> */}
-    {/* <DataBinding /> */}
-    {/* <HandleEvent /> */}
-    {/* <DemoLogin /> */}
-    {/* <DemoState /> */}
-    {/* <StyleDemo /> */}
-    {/* <RenderWithMap /> */}
-    {/* <DemoPageLogin  /> */}
-    {/* <DemoProps /> */}
-    {/* <ProductList /> */}
-    <ProductDetail />
+    <BrowserRouter>
+        <Routes>
+            <Route path='' element={<HomeTemplate />}>
+              <Route index element={<Home />}></Route>
+              <Route path='cart' element={<ProductDetail />}></Route>
+            </Route>
+        </Routes>
+    </BrowserRouter>
   </div>
 );
+
+{/* <Home />
+<DataBinding />
+<HandleEvent />
+<DemoLogin />
+<DemoState />
+<StyleDemo />
+<RenderWithMap />
+<DemoPageLogin  />
+<DemoProps />
+<ProductList />
+<ProductDetail /> */}
