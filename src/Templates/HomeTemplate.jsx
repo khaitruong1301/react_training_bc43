@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 //Component này sẽ đại diện cho component được load trên url
-import {Outlet} from 'react-router-dom'
+import {Outlet,NavLink} from 'react-router-dom'
 
 export default class HomeTemplate extends Component {
   render() {
@@ -8,8 +8,11 @@ export default class HomeTemplate extends Component {
       <div>
         <header className='header p-3 bg-dark text-white'>
             <nav className='d-flex'>
-                <a href='/' className='text-white mx-2 nav-link'>Home</a>
-                <a href='/cart' className='text-white mx-2 nav-link'>Cart (Demo Props)</a>
+                <NavLink to='/' className={({isActive}) => isActive? 'text-dark mx-2 nav-link bg-white p-2' : 'text-white bg-dark mx-2 nav-link' } style={({isActive}) => isActive ? {border:'1px solid orange'} : {} }>Home</NavLink>
+                <NavLink to='/cart' className={({isActive}) => isActive? 'text-dark mx-2 nav-link bg-white p-2' : 'text-white bg-dark mx-2 nav-link' } style={({isActive}) => isActive ? {border:'1px solid orange'} : {} }>Cart (Demo Props)</NavLink>
+                <NavLink to='/cars' className={({isActive}) => isActive? 'text-dark mx-2 nav-link bg-white p-2' : 'text-white bg-dark mx-2 nav-link' } style={({isActive}) => isActive ? {border:'1px solid orange'} :{} }>Cars</NavLink>
+                <NavLink to='/login' className={({isActive}) => isActive? 'text-dark mx-2 nav-link bg-white p-2' : 'text-white bg-dark mx-2 nav-link' } style={({isActive}) => isActive ? {border:'1px solid orange'} :{} }>Login</NavLink>
+                <NavLink to='/react-form' className={({isActive}) => isActive? 'text-dark mx-2 nav-link bg-white p-2' : 'text-white bg-dark mx-2 nav-link' } style={({isActive}) => isActive ? {border:'1px solid orange'} :{} }>ReactForm</NavLink>
             </nav>
         </header>
         <main style={{minHeight:'650px'}}>
