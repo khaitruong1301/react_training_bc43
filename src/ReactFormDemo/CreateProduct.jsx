@@ -12,21 +12,32 @@ export default class CreateProduct extends Component {
             desc: ''
         },
         errors: {
-            idProduct: '',
-            name: '',
-            price: '',
-            img: '',
-            desc: ''
+            idProduct: '(*)',
+            name: '(*)',
+            price: '(*)',
+            img: '(*)',
+            desc: '(*)'
         }
 
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
+        //Kiểm tra nếu this.state.values hợp lệ thì mới addproduct
+        //Duyệt this.state.errors
+        for (let key in this.state.errors) {
+            if(this.state.errors[key] !== '') {
+                alert('Dữ liệu nhập chưa hợp lệ');
+                return;
+            }
+        }
+
+
+
+
         //call api ....
         let {addProduct} = this.props;
         //validation trước thêm
-        
         addProduct(this.state.values);
     }
 
@@ -54,7 +65,7 @@ export default class CreateProduct extends Component {
                         };break;
                     }
                     case 'string' : {
-                        let regexString = /^[a-zA-Z]+$/;
+                        let regexString = /^[a-z A-Z0-9]+$/;
                         if(!regexString.test(value)){
                             messError = id + ' phải là ký tự !';
                         };break;
@@ -73,7 +84,26 @@ export default class CreateProduct extends Component {
         })
     }
 
+    //Can thiệp trước khi props mới truyền vào và render ra giao diện thì đem props gắn vào state 
+    // static getDerivedStateFromProps(newProps,currentState) {
+    //     if(newProps.productEdit.idProduct !== currentState.values.idProduct) {
+    //         //Bấm sửa
+    //         currentState.values = {...newProps.productEdit}
+    //         return currentState;
+    //     }
+    //     return null;
+    //   }
+
+    //Chỉ chạy khi props thay đổi và trước khi render (thường dùng cho việc gán props vào state )
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            values: newProps.productEdit
+        })
+    }
+
     render() {
+
+        let {idProduct,name,price,img,type,desc} = this.state.values;
         return (
             <form className='card' onSubmit={this.handleSubmit}>
                 <div className='card-header bg-dark text-white'>Product info</div>
@@ -82,29 +112,29 @@ export default class CreateProduct extends Component {
                         <div className='col-6'>
                             <div className='form-group'>
                                 <p>Id</p>
-                                <input data-type="number" className='form-control' id="idProduct" name="idProduct" onInput={this.handleChangeInput} />
+                                <input data-type="number" className='form-control' id="idProduct" name="idProduct" onInput={this.handleChangeInput} value={idProduct} />
                                 <p className='text text-danger'>{this.state.errors.idProduct}</p>
                             </div>
                             <div className='form-group'>
                                 <p>name</p>
-                                <input data-type="string" className='form-control' id="name" name="name" onInput={this.handleChangeInput} />
+                                <input data-type="string" className='form-control' id="name" name="name" onInput={this.handleChangeInput} value={name} />
                                 <p className='text text-danger'>{this.state.errors.name}</p>
                             </div>
                             <div className='form-group'>
                                 <p>price</p>
-                                <input data-type="number" className='form-control' id="price" name='price' onInput={this.handleChangeInput} />
+                                <input data-type="number" className='form-control' id="price" name='price' onInput={this.handleChangeInput} value={price}/>
                                 <p className='text text-danger'>{this.state.errors.price}</p>
                             </div>
                         </div>
                         <div className='col-6'>
                             <div className='form-group'>
                                 <p>img</p>
-                                <input className='form-control' id="img" name='img' onInput={this.handleChangeInput} />
+                                <input className='form-control' id="img" name='img' onInput={this.handleChangeInput} value={img} />
                                 <p className='text text-danger'>{this.state.errors.img}</p>
                             </div>
                             <div className='form-group'>
                                 <p>type</p>
-                                <select id="type" name='type' className='form-control' onInput={this.handleChangeInput}>
+                                <select value={type} id="type" name='type' className='form-control' onInput={this.handleChangeInput}>
                                     <option value="phone">Phone</option>
                                     <option value="tablet">Tablet</option>
                                     <option value="laptop">Laptop</option>
@@ -112,7 +142,7 @@ export default class CreateProduct extends Component {
                             </div>
                             <div className='form-group'>
                                 <p>desc</p>
-                                <input data-minlength='6' data-maxlength='32' className='form-control' id="desc" name='desc' onInput={this.handleChangeInput} />
+                                <input data-minlength='6' data-maxlength='32' className='form-control' id="desc" name='desc' onInput={this.handleChangeInput} value={desc}/>
                                 <p className='text text-danger'>{this.state.errors.desc}</p>
                             </div>
                         </div>
@@ -120,6 +150,13 @@ export default class CreateProduct extends Component {
                 </div>
                 <div className='card-footer'>
                     <button className='btn btn-success' type='submit'>Create</button>
+                    <button className='btn btn-success' type='button' onClick={()=>{
+                        //Lấy hàm update state từ component cha truyền vào
+                        let{updateProduct} = this.props;
+                        //Gửi ra dữ liệu sau khi thay đổi product
+                        updateProduct({...this.state.values});
+                        
+                    }}>Update</button>
                 </div>
             </form>
         )
