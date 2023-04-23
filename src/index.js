@@ -23,10 +23,16 @@ import Login from './Pages/Login';
 import Profile from './Pages/Profile';
 import ReactFormDemo from './ReactFormDemo/ReactFormDemo';
 import ReactLifeCycle from './Pages/ReactLifeCycle/ReactLifeCycle';
+//Cấu hình redux
+import {Provider} from 'react-redux';
+import {store} from './redux/configStore'
+import DemoTangGiamSoLuong from './Pages/ReduxDemo/DemoTangGiamSoLuong';
+import DemoBaiTapChonXe from './Pages/ReduxDemo/DemoBaiTapChonXe';
+import DemoFormNhanVien from './Pages/ReduxDemo/DemoFormNhanVien';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <div>
+  <Provider store={store}>
     <BrowserRouter>
         <Routes>
             <Route path='' element={<HomeTemplate />}>
@@ -37,11 +43,15 @@ root.render(
               <Route path='profile' element={<Profile />}></Route>
               <Route path='react-form' element={<ReactFormDemo />}></Route>
               <Route path='react-lifecycle' element={<ReactLifeCycle />}></Route>
+              <Route path='redux-demo1' element={<DemoTangGiamSoLuong />}></Route>
+              <Route path='redux-demo2' element={<DemoBaiTapChonXe />}></Route>
+              <Route path='redux-demo3' element={<DemoFormNhanVien />}></Route>
               <Route path='*' element={<Navigate to={'/'} />}></Route>
+            
             </Route>
         </Routes>
     </BrowserRouter>
-  </div>
+  </Provider>
 );
 
 {/* <Home />
