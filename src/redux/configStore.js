@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import nhanVienReducer from './reducers/nhanVienReducer';
 import cartReducer from './reducers/cartReducer';
+import productReducer from './reducers/productReducer';
 
 
 
@@ -26,6 +27,7 @@ export const store = configureStore({
 
         //state = 000xxx
         nhanVienReducer: nhanVienReducer,
-        cartReducer: cartReducer
+        cartReducer: cartReducer,
+        productReducer:productReducer
     }
 });
